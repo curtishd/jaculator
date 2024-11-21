@@ -16,9 +16,15 @@ public final class Main {
     public static final int BUTTON_HEIGHT = 70;
     public static final int MARGIN_X = 20;
     public static final int MARGIN_Y = 60;
-
-    private final JFrame window;
-    private final JTextField inputScreen;
+    private final JFrame window = new JFrame("Jaculator") {
+        {
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            setLocationRelativeTo(null);
+            setResizable(false);
+            setVisible(true);
+        }
+    };
+    private final JTextField inputScreen = new JTextField();
     private JButton btnRoot;
     private JButton btnPower;
     private JButton btnLog;
@@ -26,23 +32,26 @@ public final class Main {
     private char selectedOperator = ' ';
     private boolean go = true;
     private boolean addToDisplay = true;
-    private double typedValue = 0;
+    private double typedValue;
 
-    private final int[] columns = { MARGIN_X, MARGIN_X + 90, MARGIN_X + 90 * 2, MARGIN_X + 90 * 3, MARGIN_X + 90 * 4 };
-    private final int[] rows = { MARGIN_Y, MARGIN_Y + 100, MARGIN_Y + 100 + 80, MARGIN_Y + 100 + 80 * 2,
-            MARGIN_Y + 100 + 80 * 3, MARGIN_Y + 100 + 80 * 4 };
+    private final int[] columns = {
+            MARGIN_X, MARGIN_X + 90,
+            MARGIN_X + 90 * 2,
+            MARGIN_X + 90 * 3,
+            MARGIN_X + 90 * 4
+    };
 
-    {
+    private final int[] rows = {
+            MARGIN_Y,
+            MARGIN_Y + 100,
+            MARGIN_Y + 100 + 80,
+            MARGIN_Y + 100 + 80 * 2,
+            MARGIN_Y + 100 + 80 * 3,
+            MARGIN_Y + 100 + 80 * 4
+    };
+
+    static {
         FlatMacDarkLaf.setup();
-        window = new JFrame("Jaculator") {
-            {
-                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                setLocationRelativeTo(null);
-                setResizable(false);
-                setVisible(true);
-            }
-        };
-        inputScreen = new JTextField();
     }
 
     private double calculate(double fNum, double sNum, char operator) {
@@ -222,7 +231,7 @@ public final class Main {
     }
 
     private void initCalculatorTypeSelector() {
-        var comboBox = createComboBox(new String[] { "Standard", "Scientific" });
+        var comboBox = createComboBox(new String[]{"Standard", "Scientific"});
         comboBox.addItemListener(e -> {
             if (e.getStateChange() != ItemEvent.SELECTED)
                 return;
